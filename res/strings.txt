@@ -1,0 +1,7 @@
+start_mes Welcome! For call lift from pult enter 'p', from cabin - enter 'c'. For close press 'q'
+enter_mes Enter floor number: 
+err_place_mes Bad call place. Please enter call place one more time  
+err_floor_mes Bad floor number. Enter call place one more time 
+pult_call_mes Lift called from pult to floor 
+cab_call_mes Lift called from cabine to floor 
+ask_mes Do you want enter call place one more time?
