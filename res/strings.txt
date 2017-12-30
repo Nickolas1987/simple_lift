@@ -5,3 +5,7 @@ err_floor_mes Bad floor number. Enter call place one more time
 pult_call_mes Lift called from pult to floor 
 cab_call_mes Lift called from cabine to floor 
 ask_mes Do you want enter call place one more time?
+help_str -h set height of floor, -c for set count of floors, -v is for set lift velocity, option -t is for set time for open door, option -s set start floor
+open_door_str open door at floor 
+close_door_str close door at floor 
+lift_move_str lift now at floor 

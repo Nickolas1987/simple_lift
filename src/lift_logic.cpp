@@ -13,6 +13,19 @@ namespace lift_np{
     }
     bool lift_logic::init(int argc, char* argv[]){
      try{
+      //////////////////////Init interface texts
+      std::ifstream file("./res/strings.txt");
+      std::string line;
+      std::unordered_map<std::string, std::string> texts;
+      if(!file.is_open())
+        return false;
+      while(std::getline(file, line)){
+         line.erase(std::remove(line.begin(),line.end(),'\r'),line.end());
+         size_t pos = line.find(' ');
+         if(pos != std::string::npos)
+           texts[line.substr(0,pos)] = line.substr(pos + 1);
+      }
+      file.close();
       //////////Check command line params
       struct option long_opt[] = {
         {"count", 1, 0, 'c'},
@@ -20,6 +33,7 @@ namespace lift_np{
         {"velocity", 1, 0, 'v'},
         {"time_open", 1, 0, 't'},
         {"start", 1, 0, 's'},
+        {"help", 0, 0, 10},
         {0,0,0,0}
       };
       int key,optIdx;
@@ -52,6 +66,10 @@ namespace lift_np{
             start = atoi(optarg);
           break;
         }
+        case 10:{
+          std::cout << texts["help_str"] << std::endl;
+          return true;
+        }
         case '?':
           return false;
         default:
@@ -66,25 +84,12 @@ namespace lift_np{
         return false;
       if(time_open <= 0)
         return false;
-      //////////////////////Init interface texts
-      std::ifstream file("./res/strings.txt");
-      std::string line;
-      std::unordered_map<std::string, std::string> texts;
-      if(!file.is_open())
-        return false;
-      while(std::getline(file, line)){
-         line.erase(std::remove(line.begin(),line.end(),'\r'),line.end());
-         size_t pos = line.find(' ');
-         if(pos != std::string::npos)
-           texts[line.substr(0,pos)] = line.substr(pos + 1);
-      }
-      file.close();
       ///////////Create objects
       listener = std::make_shared<lift_listener>(count,texts);
       cabine = std::make_shared<lift_cabine>(static_cast<size_t>((height/velocity)*MS_MULTI),start);
-      cabine->set_open_door_strategy(std::make_shared<open_door_strategy>());
-      cabine->set_close_door_strategy(std::make_shared<close_door_strategy>(static_cast<size_t>(time_open*MS_MULTI)));
-      cabine->set_move_strategy(std::make_shared<lift_move_strategy>());
+      cabine->set_open_door_strategy(std::make_shared<open_door_strategy>(texts["open_door_str"]));
+      cabine->set_close_door_strategy(std::make_shared<close_door_strategy>(texts["close_door_str"],static_cast<size_t>(time_open*MS_MULTI)));
+      cabine->set_move_strategy(std::make_shared<lift_move_strategy>(texts["lift_move_str"]));
       listener->subscribe(*(cabine.get()));
      }
      catch(std::system_error& e){
@@ -102,6 +107,7 @@ namespace lift_np{
     }
     bool lift_logic::run(){
       try{
+        if(listener)
         listener->listen();
       }
       catch(std::system_error& e){
