@@ -15,32 +15,43 @@ namespace lift_np{
      try{
       //////////Check command line params
       struct option long_opt[] = {
-        {"count", 0, 0, 'c'},
-        {"height", 0, 0, 'h'},
-        {"velocity", 0, 0, 'v'},
-        {"time_open", 0, 0, 't'},
+        {"count", 1, 0, 'c'},
+        {"height", 1, 0, 'h'},
+        {"velocity", 1, 0, 'v'},
+        {"time_open", 1, 0, 't'},
+        {"start", 1, 0, 's'},
         {0,0,0,0}
       };
       int key,optIdx;
       size_t count = 20, start = 1;
       double height = 3.0, velocity = 1.5, time_open = 2.0; 
-      while((key = getopt_long(argc, argv, "c::h::v::t::s::", long_opt, &optIdx)) != -1){
+      while((key = getopt_long(argc, argv, "c:h:v:t:s:", long_opt, &optIdx)) != -1){
        switch(key){
-        case 'c':
-          count = atoi(optarg);
+        case 'c':{
+          if(optarg)
+            count = atoi(optarg);
           break;
-        case 'h':
-          height = atof(optarg);
+        }
+        case 'h':{
+          if(optarg)
+            height = atof(optarg);
           break;
-        case 'v':
-          velocity = atof(optarg);
+        }
+        case 'v':{
+          if(optarg)
+            velocity = atof(optarg);
           break;
-        case 't':
-          time_open = atof(optarg);
+        }
+        case 't':{
+          if(optarg)
+            time_open = atof(optarg);
           break;
-        case 's':
-          start = atoi(optarg);
+        }
+        case 's':{
+          if(optarg)
+            start = atoi(optarg);
           break;
+        }
         case '?':
           return false;
         default:
