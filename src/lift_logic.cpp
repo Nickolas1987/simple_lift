@@ -1,5 +1,4 @@
 #include <lift_logic.h>
-#include <restxtreader.h>
 #include <stdio.h>
 #include <getopt.h>
 #include <iostream>
@@ -16,11 +15,11 @@ using namespace std;
 namespace lift_np{
     lift_logic::lift_logic(){
     }
-    bool lift_logic::init(int argc, char* argv[]){
+    bool lift_logic::init(const std::shared_ptr<iresreader>& rd, int argc, char* argv[]){
      try{
       //////////////////////Init interface texts
-      restxtreader reader("./res/strings.txt");
-      std::unordered_map<std::string, std::string> texts = reader.get();
+      reader = rd;
+      std::unordered_map<std::string, std::string> texts = reader->get();
       //////////Check command line params
       struct option long_opt[] = {
         {"count", 1, 0, 'c'},

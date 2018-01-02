@@ -13,9 +13,9 @@ protected:
     void SetUp()
     {
       cabine = std::make_shared<lift_np::lift_cabine>(static_cast<size_t>(2000),1);
-      cabine->set_open_door_strategy(std::make_shared<lift_np::open_door_strategy>());
-      cabine->set_close_door_strategy(std::make_shared<lift_np::close_door_strategy>(static_cast<size_t>(1000)));
-      cabine->set_move_strategy(std::make_shared<lift_np::lift_move_strategy>());
+      cabine->set_open_door_strategy(std::make_shared<lift_np::open_door_strategy>("door opened "));
+      cabine->set_close_door_strategy(std::make_shared<lift_np::close_door_strategy>("door closed ", static_cast<size_t>(1000)));
+      cabine->set_move_strategy(std::make_shared<lift_np::lift_move_strategy>("lift moved "));
       pub.subscribe(*(cabine.get()));
     }
     void TearDown()
