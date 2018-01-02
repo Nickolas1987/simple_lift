@@ -19,6 +19,8 @@ namespace lift_np{
      try{
       //////////////////////Init interface texts
       reader = rd;
+      if(!reader)
+       return false;
       std::unordered_map<std::string, std::string> texts = reader->get();
       //////////Check command line params
       struct option long_opt[] = {
