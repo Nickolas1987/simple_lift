@@ -1,5 +1,6 @@
 #pragma once
 #include <iresreader.h>
+#include <fstream>
 namespace lift_np {
     class restxtreader: public iresreader {
     public:
@@ -10,6 +11,6 @@ namespace lift_np {
         restxtreader(const restxtreader&) = delete;
         restxtreader& operator=(const restxtreader&) = delete;
         std::ifstream file;
-        std::unoredered_map<std::string,std::string> res;
+        std::unordered_map<std::string,std::string> res;
     };
 }

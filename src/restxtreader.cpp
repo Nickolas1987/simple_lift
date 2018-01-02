@@ -1,5 +1,6 @@
 #include <restxtreader.h>
 #include <stdexcept>
+#include <algorithm>
 namespace lift_np{
     restxtreader::restxtreader(const std::string& name):file(name){
       if(!file.is_open())
