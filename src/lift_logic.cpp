@@ -11,6 +11,9 @@
 #define CLOSE_DOOR_STR "close_door_str"
 #define LIFT_MOVE_STR "lift_move_str"
 #define HELP_STR "help_str"
+#define FIRST_FLOOR 1
+#define LAST_FLOOR_MIN 5
+#define LAST_FLOOR_MAX 20
 using namespace std;
 namespace lift_np{
     lift_logic::lift_logic(){
@@ -72,13 +75,15 @@ namespace lift_np{
          break;
        }
       }
-      if(count < 5 || count > 20)
+      if(count < LAST_FLOOR_MIN || count > LAST_FLOOR_MAX)
         return false;
       if(height <= 0)
         return false;
       if(velocity <= 0)
         return false;
       if(time_open <= 0)
+        return false;
+      if(start < FIRST_FLOOR || start > count)
         return false;
       ///////////Create objects
       listener = std::make_shared<lift_listener>(count,texts);
